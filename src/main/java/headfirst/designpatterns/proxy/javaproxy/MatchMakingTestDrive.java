@@ -38,14 +38,15 @@ public class MatchMakingTestDrive {
 		nonOwnerProxy.setHotOrNotRating(3);
 		System.out.println("Rating set from non owner proxy");
 		System.out.println("Rating is " + nonOwnerProxy.getHotOrNotRating());
+		System.out.println(Proxy.isProxyClass(nonOwnerProxy.getClass()));
 	}
 
 	PersonBean getOwnerProxy(PersonBean person) {
- 		
-        return (PersonBean) Proxy.newProxyInstance( 
+        Object proxy = Proxy.newProxyInstance( 
             	person.getClass().getClassLoader(),
             	person.getClass().getInterfaces(),
                 new OwnerInvocationHandler(person));
+		return (PersonBean) proxy;
 	}
 
 	PersonBean getNonOwnerProxy(PersonBean person) {
